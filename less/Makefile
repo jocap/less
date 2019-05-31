@@ -15,7 +15,9 @@ DPADD=	${LIBCURSES}
 LINKS=	${BINDIR}/less ${BINDIR}/more
 
 MAN=	less.1 more.1
-BINDIR=	/usr/bin
+BINDIR=	/usr/local/bin
+SHAREDIR= /usr/local/share
+MANDIR= /usr/local/share/man/man
 
 HELPDIR=${SHAREDIR}/misc
 

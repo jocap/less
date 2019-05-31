@@ -151,9 +151,10 @@ struct textlist {
 #define	CONTROL(c)	((c)&037)
 #define	ESC		CONTROL('[')
 
-#define	S_INTERRUPT	01
-#define	S_STOP		02
-#define	S_WINCH		04
+#define	S_INTERRUPT	001
+#define	S_STOP		002
+#define	S_WINCH		004
+#define S_HUP		010
 #define	ABORT_SIGS()	(sigs & (S_INTERRUPT|S_STOP))
 
 #define	QUIT_OK		0

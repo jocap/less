@@ -5,7 +5,9 @@
 PROG=	lesskey
 SRCS=	lesskey.c version.c
 
-BINDIR=	/usr/bin
+BINDIR=	/usr/local/bin
+SHAREDIR= /usr/local/share
+MANDIR= /usr/local/share/man/man
 
 CFLAGS+=-I${.CURDIR}/..
 

@@ -61,6 +61,15 @@ sigwinch(int type)
 }
 
 /*
+ * "Hangup" signal handler
+ */
+void
+sighup(int type)
+{
+	sigs |= S_HUP;
+}
+
+/*
  * Set up the signal handlers.
  */
 void
@@ -73,6 +82,7 @@ init_signals(int on)
 		(void) lsignal(SIGINT, u_interrupt);
 		(void) lsignal(SIGTSTP, stop);
 		(void) lsignal(SIGWINCH, sigwinch);
+		(void) lsignal(SIGHUP, sighup);
 		(void) lsignal(SIGQUIT, SIG_IGN);
 	} else {
 		/*
@@ -81,6 +91,7 @@ init_signals(int on)
 		(void) lsignal(SIGINT, SIG_DFL);
 		(void) lsignal(SIGTSTP, SIG_DFL);
 		(void) lsignal(SIGWINCH, SIG_IGN);
+		(void) lsignal(SIGHUP, SIG_IGN);
 		(void) lsignal(SIGQUIT, SIG_DFL);
 	}
 }
@@ -89,13 +100,13 @@ init_signals(int on)
  * Process any signals we have received.
  * A received signal cause a bit to be set in "sigs".
  */
-void
+int
 psignals(void)
 {
 	int tsignals;
 
 	if ((tsignals = sigs) == 0)
-		return;
+		return 0;
 	sigs = 0;
 
 	if (tsignals & S_STOP) {
@@ -142,6 +153,10 @@ psignals(void)
 		if (quit_on_intr)
 			quit(QUIT_INTERRUPT);
 	}
+	if (tsignals & S_HUP) {
+		return 1; /* flush buffers */
+	}
+	return 0;
 }
 
 /*

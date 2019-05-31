@@ -939,7 +939,11 @@ commands(void)
 		 * See if any signals need processing.
 		 */
 		if (sigs) {
-			psignals();
+			if (psignals()) {
+				clear_buffers();
+				cmd_exec();
+				repaint();
+			}
 			if (quitting)
 				quit(QUIT_SAVED_STATUS);
 		}
@@ -1184,6 +1188,7 @@ again:
 			break;
 
 		case A_FREPAINT:
+frepaint:
 			/*
 			 * Flush buffers, then repaint screen.
 			 * Don't flush the buffers on a pipe!

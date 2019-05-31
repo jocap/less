@@ -265,7 +265,7 @@ void set_filter_pattern(char *, int);
 int is_filtering(void);
 void sigwinch(int);
 void init_signals(int);
-void psignals(void);
+int psignals(void);
 void cleantags(void);
 void findtag(char *);
 off_t tagsearch(void);
